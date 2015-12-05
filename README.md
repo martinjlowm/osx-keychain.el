@@ -1,7 +1,16 @@
 # osx-keychain.el
-`osx-keychain.el` allows you to access OS X Keychain entries using Emacs. This allows one to store passwords used by Emacs packages such as [erc](http://www.emacswiki.org/cgi-bin/wiki/ERC) and [emacs-jabber](http://emacs-jabber.sourceforge.net/) safely in OS X Keychain.
+`osx-keychain.el` allows you to access OS X Keychain entries using Emacs. This
+allows one to store passwords used by Emacs packages such as
+[erc](http://www.emacswiki.org/cgi-bin/wiki/ERC) and
+[emacs-jabber](http://emacs-jabber.sourceforge.net/) safely in OS X Keychain.
+
 ## Installation
-TODO
+Download `osx-keychain.el` and add the following code to your `init.el`:
+```
+(add-to-list 'load-path "path/to/osx-keychain.el")
+(require 'osx-keychain)
+```
+
 ## Example usage
 Here is how you might use `osx-keychain.el` to configure emacs-jabber:
 ```
