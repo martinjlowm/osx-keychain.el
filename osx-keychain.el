@@ -1,5 +1,17 @@
+;;; osx-keychain.el --- Interface with the keychain of OS X
+
+;;; Includes functions that interface with the security utility to look up
+;;; internet- or generic passwords.
+
+;;; This file not shipped as part of GNU Emacs.
+
+;;; Commentary:
+
+;; See documentation in README.md
+
+;;; Code:
 (defun security-args (type account server)
-  "Build a list of arguments for `security', the keychain application of OS X."
+  "Build a list of arguments of TYPE, ACCOUNT and SERVER for security."
   (let ((version-string (shell-command-to-string "sw_vers -productVersion"))
         (args '()))
     (add-to-list 'args (concat "find-" type "-password") t)
@@ -16,9 +28,11 @@
     args))
 
 (defun find-keychain-password (type account server)
+  "Return the password fetched from security.
+TYPE, ACCOUNT and SERVER is passed on to `security-args' to build
+a list of required arguments for security."
   (let ((password-line
-         (first
-          (apply 'process-lines
+         (car (apply 'process-lines
                  (append '("security")
                          (security-args type account server))))))
     (string-match "password: \"\\(.*\\)\"" password-line)
@@ -26,7 +40,12 @@
 
 
 (defun find-keychain-internet-password (account server)
+  "Return an internet password given ACCOUNT and SERVER."
   (find-keychain-password "internet" account server))
 
 (defun find-keychain-generic-password (account server)
+  "Return a generic password given ACCOUNT and SERVER."
   (find-keychain-password "generic" account server))
+
+(provide 'osx-keychain)
+;;; osx-keychain.el ends here
